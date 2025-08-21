@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}Gestión de Categorías{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4 text-gray-800 text-center">🗂️ Gestión de Categorías</h1>
+
+<div id="alertBox" class="alert" style="display:none"></div>
+
+<div class="mb-3 d-flex justify-content-end">
+  <button class="btn btn-success" id="btnNewCategory">➕ Nueva Categoría</button>
+</div>
+
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" id="categories-table">
+        <thead class="thead-light">
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th style="width: 160px;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="categories-tbody"></tbody>
+      </table>
+      <div id="emptyState" class="text-center text-muted" style="display:none;">
+        No hay categorías todavía.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Nueva/Editar Categoría -->
+<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" id="categoryForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="categoryModalTitle">Nueva Categoría</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="categoryId">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" id="categoryName" class="form-control" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" type="submit">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/categories.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block title %}Gestión de Usuarios{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4 text-gray-800 text-center">👤 Gestión de Usuarios</h1>
+
+<div id="alertBox" class="alert" style="display:none"></div>
+
+<div class="mb-3 d-flex justify-content-end">
+  <button class="btn btn-success" id="btnNewUser">➕ Nuevo Usuario</button>
+</div>
+
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" id="users-table">
+        <thead class="thead-light">
+          <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Rol</th>
+            <th>Creado</th>
+            <th class="text-right" style="width: 180px;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div id="emptyState" class="text-center text-muted" style="display:none;">
+        No hay usuarios todavía.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Crear/Editar -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form class="modal-content" id="userForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userModalTitle">Nuevo Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="userId">
+
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input type="text" id="username" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña <small class="text-muted">(dejar vacío para no cambiar)</small></label>
+          <input type="password" id="password" class="form-control" placeholder="">
+        </div>
+
+        <div class="form-group">
+          <label for="role">Rol</label>
+          <select id="role" class="form-control" required>
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" type="submit" id="userSaveBtn">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/users.js') }}"></script>
+{% endblock %}

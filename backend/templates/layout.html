@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Inventario{% endblock %}</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Estilos base -->
+  <link href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet" />
+</head>
+<body id="page-top">
+
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('web.dashboard') }}">
+        <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-boxes"></i></div>
+        <div class="sidebar-brand-text mx-3">Inventario</div>
+      </a>
+
+      <hr class="sidebar-divider my-0" />
+
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('web.dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('web.productos') }}"><i class="fas fa-box"></i> Productos</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('web.categorias') }}"><i class="fas fa-tags"></i> Categorías</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('web.ordenes') }}"><i class="fas fa-shopping-cart"></i> Órdenes</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('web.proveedores') }}"><i class="fas fa-truck"></i> Proveedores</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('web.reportes') }}"><i class="fas fa-chart-line"></i> Reportes</a></li>
+
+      <!-- ✅ Nueva sección Usuarios: oculto por defecto; layout.js lo muestra si rol=admin -->
+      <li class="nav-item">
+        <a id="usuariosLink" class="nav-link d-none" href="{{ url_for('web.usuarios') }}">
+          <i class="fas fa-users"></i> Usuarios
+        </a>
+      </li>
+
+      <li class="nav-item"><a class="nav-link text-warning" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+    </ul>
+
+    <!-- Contenido principal -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content" class="p-4">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts base -->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+
+  <!-- Módulos comunes -->
+  <script type="module" src="{{ url_for('static', filename='js/common.js') }}"></script>
+  <!-- Módulo de layout (toggle sidebar, logout, mostrar Usuarios si admin) -->
+  <script type="module" src="{{ url_for('static', filename='js/layout.js') }}"></script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

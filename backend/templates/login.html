@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+
+<h2 class="text-center mb-4">🔐 Acceso al Sistema</h2>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-body">
+        <form id="loginForm" autocomplete="on">
+          <div class="mb-3">
+            <label for="username" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="username" name="username" required autofocus>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" id="loginButton">Ingresar</button>
+        </form>
+
+        <div id="responseMessage" class="text-danger text-center mt-3" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay de bloqueo mientras valida/precarga -->
+<div id="bootOverlay"
+     style="display:none; position:fixed; inset:0; background:rgba(255,255,255,.9); z-index:1050; 
+            display:none; align-items:center; justify-content:center; flex-direction:column;">
+  <div class="spinner-border" role="status" aria-hidden="true"></div>
+  <div id="bootOverlayText" class="mt-3 text-muted">Verificando sesión…</div>
+</div>
+
+<!-- Script de login -->
+<script type="module" src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+{% endblock %}

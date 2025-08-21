@@ -1,0 +1,90 @@
+/* Fuente global */
+body, h1, h2, h3, h4, h5, h6, .card, .btn, .table, input, select {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Fondo general y texto */
+body {
+  background-color: #eafaf1;
+  color: #2c3e50;
+}
+
+/* Colores base */
+.bg-gradient-primary {
+  background-color: #2ecc71 !important;
+  background-image: none !important;
+}
+
+.btn-primary {
+  background-color: #27ae60;
+  border-color: #27ae60;
+}
+.btn-primary:hover {
+  background-color: #239a53;
+  border-color: #239a53;
+}
+
+.btn-outline-primary {
+  color: #27ae60;
+  border-color: #27ae60;
+}
+.btn-outline-primary:hover {
+  background-color: #27ae60;
+  color: #fff;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #2ecc71 !important;
+}
+.nav-link,
+.nav-link i {
+  color: #ffffff !important;
+}
+.nav-link:hover {
+  background-color: #27ae60 !important;
+  color: #fff !important;
+}
+.sidebar-brand-text {
+  font-weight: 600;
+}
+
+/* Tarjetas y tablas */
+.card-header {
+  background-color: #a2d5a1;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.table thead {
+  background-color: #d4edda;
+  color: #2c3e50;
+}
+
+/* Links generales */
+a {
+  color: #27ae60;
+}
+a:hover {
+  color: #1e8449;
+  text-decoration: none;
+}
+
+/* Spinner personalizado */
+.spinner-border {
+  color: #27ae60;
+}
+
+/* Encabezados destacados */
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+/* Tamaño más compacto para charts */
+.chart-wrap canvas {
+  max-height: 240px !important; /* antes ocupaba mucho más */
+}
+
+.card .card-header h6 {
+  margin: 0;
+}

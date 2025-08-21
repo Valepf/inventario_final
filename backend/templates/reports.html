@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block title %}Reportes{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4 text-gray-800 text-center">📊 Reportes</h1>
+
+<!-- Stock por categoría -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="m-0 font-weight-bold text-primary">Stock por Categoría</h6>
+    <div>
+      <button class="btn btn-sm btn-outline-primary" id="exp-sbc-csv"><i class="fas fa-file-csv"></i> CSV</button>
+      <button class="btn btn-sm btn-outline-danger"  id="exp-sbc-pdf"><i class="fas fa-file-pdf"></i> PDF</button>
+    </div>
+  </div>
+  <div class="card-body">
+    <canvas id="chart-stock-by-category" height="120"></canvas>
+  </div>
+</div>
+
+<!-- Historial de órdenes -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="m-0 font-weight-bold text-primary">Historial de Órdenes (mensual)</h6>
+    <div>
+      <button class="btn btn-sm btn-outline-primary" id="exp-oh-csv"><i class="fas fa-file-csv"></i> CSV</button>
+      <button class="btn btn-sm btn-outline-danger"  id="exp-oh-pdf"><i class="fas fa-file-pdf"></i> PDF</button>
+    </div>
+  </div>
+  <div class="card-body">
+    <canvas id="chart-orders-history" height="120"></canvas>
+  </div>
+</div>
+
+<!-- Bajo stock -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="m-0 font-weight-bold text-primary">Productos con Bajo Stock</h6>
+    <div>
+      <button class="btn btn-sm btn-outline-primary" id="exp-low-csv"><i class="fas fa-file-csv"></i> CSV</button>
+      <button class="btn btn-sm btn-outline-danger"  id="exp-low-pdf"><i class="fas fa-file-pdf"></i> PDF</button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" id="low-stock-table">
+        <thead class="thead-light">
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Chart.js (si ya lo cargas en otra vista, podés quitar esta línea) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="{{ url_for('static', filename='js/reports.js') }}"></script>
+{% endblock %}
