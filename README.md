@@ -1,109 +1,196 @@
-# Sistema de Gestión de Inventario
+# 📦 Sistema de Gestión de Inventario
 
-Aplicación desarrollada con **Flask (Python)**, **MySQL (XAMPP)** y un frontend en **HTML, CSS y JavaScript**.
-Permite la gestión de productos, categorías, proveedores, órdenes y reportes de inventario.
+Aplicación web para la administración y control de inventario, desarrollada con **Python, Flask y MySQL**, con una interfaz web construida en **HTML, CSS y JavaScript**.
 
-## Requisitos
-- Python 3.10 o superior
-- XAMPP con MySQL activo
-- Visual Studio Code (opcional)
-- Thunder Client o Postman (opcional, para probar la API)
+El sistema permite centralizar la gestión de productos, categorías, proveedores, órdenes, usuarios y reportes, incorporando autenticación y distintos niveles de acceso.
 
-## Instalación del entorno
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/TU-USUARIO/inventario.git
-   cd inventario/backend
-   ```
-2. Crear y activar entorno virtual:
-   - Windows:
-     ```bash
-     python -m venv .venv
-     .venv\Scripts\activate
-     ```
-   - Linux/Mac:
-     ```bash
-     python -m venv .venv
-     source .venv/bin/activate
-     ```
-3. Instalar dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-## Inicialización de la base de datos (phpMyAdmin o consola)
-> **Orden recomendado:** `create_db.sql` → `create_user.sql` (opcional) → `test_seeder.sql`.
+## 🚀 Funcionalidades principales
 
-### Opción A: phpMyAdmin
-1. Iniciar **MySQL** en XAMPP y abrir **phpMyAdmin**.
-2. Menú **Importar** → seleccionar el archivo `db/create_db.sql` → Ejecutar.
-3. (Opcional) Importar `db/create_user.sql` si se desea crear el usuario `mi_inventario` distinto de `root`.
-4. Importar `db/test_seeder.sql` para cargar datos de prueba.
+* Gestión de productos.
+* Administración de categorías.
+* Gestión de proveedores.
+* Registro y seguimiento de órdenes.
+* Control de usuarios.
+* Roles de usuario y administrador.
+* Autenticación mediante JWT.
+* Dashboard de gestión.
+* Reportes de inventario.
+* Exportación de información a PDF.
+* Control de relaciones entre productos, categorías y proveedores.
+* Manejo de variables de entorno para configuración sensible.
 
-### Opción B: consola
-```bash
-# Usando el cliente mysql (ajustar ruta/usuario/clave si es necesario)
-mysql -u root -p < db/create_db.sql
-mysql -u root -p < db/test_seeder.sql
-# (Opcional) crear usuario dedicado
-mysql -u root -p < db/create_user.sql
+---
+
+## 🛠️ Tecnologías utilizadas
+
+### Backend
+
+* Python
+* Flask
+* Flask-JWT-Extended
+* Flask-CORS
+* Flask-SQLAlchemy
+* Werkzeug
+
+### Base de datos
+
+* MySQL
+* PyMySQL
+* MySQL Connector
+
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript
+
+### Otras herramientas
+
+* python-dotenv
+* xhtml2pdf
+* Git
+* GitHub
+
+---
+
+## 🔐 Autenticación y seguridad
+
+El sistema cuenta con autenticación mediante **JSON Web Tokens (JWT)**.
+
+Las contraseñas de los nuevos usuarios se almacenan utilizando hashing con **scrypt** mediante Werkzeug.
+
+También se mantiene compatibilidad con usuarios creados durante etapas anteriores del desarrollo del proyecto.
+
+Los datos sensibles y configuraciones locales se administran mediante variables de entorno y no se incluyen en el repositorio.
+
+---
+
+## 👥 Roles
+
+### Administrador
+
+Cuenta con acceso a las funciones administrativas del sistema, incluyendo gestión de:
+
+* Productos
+* Categorías
+* Proveedores
+* Usuarios
+* Reportes
+
+### Usuario
+
+Dispone de acceso limitado a las funciones correspondientes a su rol dentro del sistema.
+
+---
+
+## 📁 Estructura del proyecto
+
+```text
+inventario_final/
+│
+├── backend/
+│   ├── api/
+│   │   ├── db/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── utils/
+│   │
+│   ├── static/
+│   ├── templates/
+│   ├── main.py
+│   ├── requirements.txt
+│   └── .gitignore
+│
+└── README.md
 ```
 
-## Ejecución de la aplicación
-Desde la carpeta `backend/`:
+---
+
+## ⚙️ Instalación
+
+### 1. Clonar el repositorio
+
 ```bash
-set FLASK_APP=main.py   # Windows CMD
-set FLASK_ENV=development
-flask run
-# Navegar a http://localhost:5000
-```
-En Linux/Mac:
-```bash
-export FLASK_APP=main.py
-export FLASK_ENV=development
-flask run
+git clone https://github.com/Valepf/inventario_final.git
 ```
 
-## Políticas de consistencia y borrado
-- **Products → Categories:** `ON DELETE RESTRICT`. No es posible eliminar una categoría si existen productos asociados. La eliminación debe realizarse **reasignando** los productos a otra categoría desde la interfaz/endpoint correspondiente.
-- **Orders → Products:** `ON DELETE RESTRICT`. El historial de órdenes se preserva incluso si se desea eliminar un producto; primero debe resolverse el vínculo (cancelar/archivar).
-- **Products → Suppliers (opcional):** `ON DELETE SET NULL` si se usa `supplier_id` directo. Además existe la tabla `product_suppliers` para relaciones M:N.
-- Las **vistas** (`current_inventory`, `low_stock_products`, `orders_by_category`, `orders_history`) se crean **sin `DEFINER`**, para evitar problemas de permisos al importar en equipos distintos.
+Ingresar al proyecto:
 
-## Datos de prueba
-- Los usuarios y datos iniciales se cargan con `db/test_seeder.sql`.
-- Las contraseñas están **hasheadas con scrypt**. Si necesitás contraseñas específicas, reemplaza los hashes en el seeder por los que produzca tu backend o solicita un seeder alternativo.
+```bash
+cd inventario_final/backend
+```
 
+### 2. Crear un entorno virtual
 
-## Ingreso según rol
+En Windows:
 
-**Administración (rol: `admin`)**
-- Usuario: `admin`
-- Permisos: acceso total (productos, categorías, proveedores, reportes). La eliminación de categorías requiere **reasignar** productos previamente (política ON DELETE RESTRICT).
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
 
-**Usuario general (rol: `general`)**
-- Usuarios de ejemplo: `user1`, `user2`
-- Permisos: creación/lectura de órdenes y productos según las reglas de negocio. No puede eliminar categorías con productos ni acceder a funciones administrativas.
+En Linux o macOS:
 
-**Contraseñas**
-- Las contraseñas se cargan desde `db/test_seeder.sql` y están **hasheadas con scrypt**.
-- Si preferís usar contraseñas conocidas (ej. `admin123` / `user123`), reemplazá los valores de `password` en el seeder por hashes scrypt válidos.
-  - Hashes scrypt de ejemplo: ver `demo_hashes.txt` incluido en la entrega (generados con `werkzeug.security.generate_password_hash`).
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
-## Ingreso según rol
+### 3. Instalar las dependencias
 
-**Administración (rol: `admin`)**
-- Usuario: `admin`
-- Contraseña: `adminpassword`
-- Permisos: acceso total (productos, categorías, proveedores, reportes). La eliminación de categorías requiere **reasignar** productos previamente (ON DELETE RESTRICT).
+```bash
+pip install -r requirements.txt
+```
 
-**Usuario general (rol: `general`)**
-- Usuarios: `user1` y `user2`
-- Contraseña: `user123`
-- Permisos: creación/lectura de órdenes y productos según las reglas de negocio. Sin acceso a funciones administrativas.
+### 4. Configurar la base de datos
 
-**Notas sobre contraseñas**
-- Las contraseñas del entorno de prueba están en **texto plano** en `db/test_seeder.sql` (sin hash).
-- Si el backend tenía validación con hash (p. ej. `check_password_hash`), reemplazar por comparación directa de texto:
-  - Antes: `check_password_hash(row["password"], password_ingresada)`
-  - Ahora: `row["password"] == password_ingresada`
+El proyecto utiliza **MySQL**.
+
+La conexión debe configurarse mediante las variables de entorno correspondientes antes de iniciar la aplicación.
+
+---
+
+## ▶️ Ejecutar el proyecto
+
+Desde la carpeta `backend`:
+
+```bash
+python main.py
+```
+
+Por defecto, la aplicación se ejecuta en:
+
+```text
+http://localhost:5000
+```
+
+---
+
+## 🎯 Objetivo del proyecto
+
+Este proyecto fue desarrollado para aplicar conceptos de desarrollo web y backend en un sistema de gestión completo, incluyendo:
+
+* Diseño de una aplicación modular.
+* Desarrollo de APIs.
+* Persistencia de datos.
+* Autenticación y autorización.
+* Gestión de roles.
+* Implementación de reglas de negocio.
+* Manejo de relaciones entre entidades.
+* Generación de reportes.
+
+---
+
+## 📌 Estado
+
+Proyecto funcional en proceso de mejora y documentación para portfolio.
+
+---
+
+## 👩‍💻 Autor
+
+**Valepf**
+
+GitHub: `github.com/Valepf`
